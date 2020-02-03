@@ -1,15 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.Events;
 using UnityEngine;
 
 public class lerpToPositionOnCollide : MonoBehaviour
 {
     bool isMoving = false;
+    public UnityEvent playClickNoise;
 
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -26,8 +27,11 @@ public class lerpToPositionOnCollide : MonoBehaviour
         var objectWeAreHitting = other.gameObject.name;
         //Check if we're colliding with the correct object
         if (currentObject + "_outline" == objectWeAreHitting)
-            //Do the SLERP
+        {
+            //Do the SLERP and the NOIZE
+            playClickNoise.Invoke();
             StartCoroutine(moveToPosition(gameObject, other.gameObject, 2.0f));
+        }
     }
 
     IEnumerator moveToPosition(GameObject fromPositionObject, GameObject toGameObject, float duration)
